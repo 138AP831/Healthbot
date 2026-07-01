@@ -26,31 +26,35 @@ Suggested things to try:
 - One-click automation trigger — a "Confirm Booking" button fires a Zap carrying the full conversation transcript and metadata to downstream apps
 - Hard safety boundary — the bot is explicitly instructed to never diagnose, recommend treatment, or interpret results; any symptom or medical-advice language triggers an immediate escalation message and flags the conversation for staff review
 
+
+
 ## Architecture
 
+```
 User message
-    |
-    v
-Greeting + quick-reply buttons (Suggestions logic)
-    |
-    |-- Book Appointment --> Collect Leads
-    |                        (name, reason, contact, date/time, insurance)
-    |                              |
-    |                              v
-    |                     "Confirm Booking" button
-    |                              |
-    |                              v
-    |                     Zap button trigger --> Zap actions
-    |                                            (Google Sheets / Calendar / Slack)
-    |
-    |-- Ask a Question --> Knowledge base lookup (FAQ doc)
-    |                              |
-    |                              +-- low confidence / medical question
-    |                                          |
-    |                                          v
-    |                                 Escalation message + staff flag
-    |
-    +-- Talk to Staff --> Immediate escalation, staff notified directly
+    │
+    ▼
+Greeting + quick-reply buttons  (Suggestions logic)
+    │
+    ├── Book Appointment ──▶ Collect Leads
+    │                        (name, reason, contact, date/time, insurance)
+    │                              │
+    │                              ▼
+    │                     "Confirm Booking" button
+    │                              │
+    │                              ▼
+    │                     Zap button trigger ──▶ Zap actions
+    │                                            (Google Sheets / Calendar / Slack)
+    │
+    ├── Ask a Question ──▶ Knowledge base lookup (FAQ doc)
+    │                              │
+    │                              └── low confidence / medical question
+    │                                          │
+    │                                          ▼
+    │                                 Escalation message + staff flag
+    │
+    └── Talk to Staff ──▶ Immediate escalation, staff notified directly
+```
 
 ## Tech stack
 
@@ -59,20 +63,6 @@ Greeting + quick-reply buttons (Suggestions logic)
 - Automation: Zaps (Zap button trigger to Sheets / Calendar / Slack actions)
 - Data storage (leads): Zapier Tables
 - Knowledge base: Uploaded FAQ document (PDF/Markdown)
-
-## Repo structure
-
-riverside-healthbot-portfolio/
-├── README.md
-├── docs/
-│   ├── chatbot_directive.md        # System prompt / directive used in Zapier
-│   ├── faq_knowledge_base.md       # FAQ knowledge source (source format)
-│   └── faq_knowledge_base.pdf      # FAQ knowledge source (upload format)
-├── data/
-│   ├── synthetic_patient_intake.xlsx  # 40 rows of fake intake data, for testing
-│   └── synthetic_patient_intake.pdf   # Same data, PDF format
-└── screenshots/
-    └── (Logic tab, live chat, Zap editor screenshots)
 
 ## Setup / how to reproduce
 
