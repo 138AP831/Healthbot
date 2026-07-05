@@ -30,31 +30,7 @@ Suggested things to try:
 
 ## Architecture
 
-```
-User message
-    │
-    ▼
-Greeting + quick-reply buttons  (Suggestions logic)
-    │
-    ├── Book Appointment ──▶ Collect Leads
-    │                        (name, reason, contact, date/time, insurance)
-    │                              │
-    │                              ▼
-    │                     "Confirm Booking" button
-    │                              │
-    │                              ▼
-    │                     Zap button trigger ──▶ Zap actions
-    │                                            (Google Sheets / Calendar / Slack)
-    │
-    ├── Ask a Question ──▶ Knowledge base lookup (FAQ doc)
-    │                              │
-    │                              └── low confidence / medical question
-    │                                          │
-    │                                          ▼
-    │                                 Escalation message + staff flag
-    │
-    └── Talk to Staff ──▶ Immediate escalation, staff notified directly
-```
+![Chatbot conversation logic](./chatbot_flow_neon_v2.svg)
 
 ## Tech stack
 
